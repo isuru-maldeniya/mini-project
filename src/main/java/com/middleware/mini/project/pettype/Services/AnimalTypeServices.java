@@ -20,21 +20,41 @@ public class AnimalTypeServices {
 
 
     public boolean addAnimalType(PetTypeDTO type){
-        PetType petType = new PetType(type.getCategoryName(), type.getFamily(), type.getEnvironment(), type.getClimate());
+        PetType petType = new PetType(
+                type.getCategoryName(),
+                type.getFamily(),
+                type.getEnvironment(),
+                type.getClimate()
+        );
         petTypeRegistry.persist(petType);
         return petTypeRegistry.isPersistent(petType);
     }
 
     public PetTypeDTO getTypeById(int id){
         PetTypeDTO petTypeDTO=null;
-        List<PetTypeDTO> list = petTypeRegistry.list("id", id).stream().map(type -> new PetTypeDTO(type.getId(), type.getCategoryName(), type.getFamily(), type.getEnvironment(), type.getClimate())).collect(Collectors.toList());
+        List<PetTypeDTO> list = petTypeRegistry.list("id", id).stream().map(type -> new PetTypeDTO(
+                type.getId(),
+                type.getCategoryName(),
+                type.getFamily(),
+                type.getEnvironment(),
+                type.getClimate()
+        )).collect(Collectors.toList());
 
         if(list.isEmpty()){
             return null;
         }else{
             return list.get(0);
         }
+    }
 
+    public List<PetTypeDTO> getAll(){
+        return petTypeRegistry.findAll().stream().map(type -> new PetTypeDTO(
+                type.getId(),
+                type.getCategoryName(),
+                type.getFamily(),
+                type.getEnvironment(),
+                type.getClimate()
+        )).collect(Collectors.toList());
     }
 
 //    public java.util.List<PetType> search(String name){

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("pet-type")
 public class PetTypeController {
@@ -26,6 +27,7 @@ public class PetTypeController {
     }
     @GET
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response findTypeByName(@PathParam("id") int id){
         PetTypeDTO typeById = animalTypeServices.getTypeById(id);
         if(typeById==null){
@@ -34,4 +36,16 @@ public class PetTypeController {
             return Response.ok(typeById).status(Response.Status.OK).build();
         }
     }
+
+    @GET
+    @Path("/")
+    public Response getAll(){
+        List<PetTypeDTO> all = animalTypeServices.getAll();
+        if(all.isEmpty()){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }else{
+            return Response.ok(all).build();
+        }
+    }
+
 }
