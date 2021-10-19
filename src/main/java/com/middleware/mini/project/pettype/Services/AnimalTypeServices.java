@@ -11,8 +11,10 @@ import javax.transaction.Transactional;
 public class AnimalTypeServices {
 
 
-    public void addAnimalType(PetTypeDTO type){
-        PetType.persist(new PetType(type.getId(),type.getCategoryName()));
+    public boolean addAnimalType(PetTypeDTO type){
+        PetType petType = new PetType(type.getCategoryName(), type.getFamily(), type.getEnvironment(), type.getClimate());
+        PetType.persist(petType);
+        return petType.isPersistent();
     }
 
 //    public java.util.List<PetType> search(String name){
