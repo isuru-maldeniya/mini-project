@@ -1,10 +1,10 @@
 package com.middleware.mini.project.pettype.DTO;
 
-public class PetType {
+public class PetTypeDTO {
     private int id;
     private String categoryName;
 
-    public PetType(int id, String categoryName) {
+    public PetTypeDTO(int id, String categoryName) {
         this.id = id;
         this.categoryName = categoryName;
     }

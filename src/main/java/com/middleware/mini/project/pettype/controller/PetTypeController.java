@@ -1,6 +1,6 @@
 package com.middleware.mini.project.pettype.controller;
 
-import com.middleware.mini.project.pettype.DTO.PetType;
+import com.middleware.mini.project.pettype.DTO.PetTypeDTO;
 import com.middleware.mini.project.pettype.Services.AnimalTypeServices;
 
 import javax.inject.Inject;
@@ -18,7 +18,7 @@ public class PetTypeController {
     @POST
     @Path("add-type")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addType(PetType petType){
-        animalTypeServices.addAnimalType(petType);
+    public void addType(PetTypeDTO petTypeDTO){
+        animalTypeServices.addAnimalType(petTypeDTO);
     }
 }

@@ -6,20 +6,20 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name="AnimalType.findByCategoryName",query="SELECT a FROM AnimalType a WHERE a.categoryName = :categoryName")
-public class AnimalType extends PanacheEntityBase {
+@NamedQuery(name="AnimalType.findByCategoryName",query="SELECT a FROM PetType a WHERE a.categoryName = :categoryName")
+public class PetType extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String categoryName;
 
-    public AnimalType(int id,String categoryName) {
+    public PetType(int id, String categoryName) {
         this.categoryName = categoryName;
 //        this.id=id;
     }
 
-    public AnimalType() {
+    public PetType() {
     }
 
     public int getId() {

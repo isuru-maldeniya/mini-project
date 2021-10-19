@@ -1,7 +1,7 @@
 package com.middleware.mini.project.pettype.Services;
 
-import com.middleware.mini.project.pettype.DTO.PetType;
-import com.middleware.mini.project.pettype.Entity.AnimalType;
+import com.middleware.mini.project.pettype.DTO.PetTypeDTO;
+import com.middleware.mini.project.pettype.Entity.PetType;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -11,8 +11,8 @@ import javax.transaction.Transactional;
 public class AnimalTypeServices {
 
 
-    public void addAnimalType(PetType type){
-        AnimalType.persist(new AnimalType(type.getId(),type.getCategoryName()));
+    public void addAnimalType(PetTypeDTO type){
+        PetType.persist(new PetType(type.getId(),type.getCategoryName()));
     }
 
 //    public java.util.List<PetType> search(String name){
