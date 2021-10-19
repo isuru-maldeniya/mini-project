@@ -4,9 +4,7 @@ import com.middleware.mini.project.pettype.DTO.PetTypeDTO;
 import com.middleware.mini.project.pettype.Services.AnimalTypeServices;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -24,6 +22,16 @@ public class PetTypeController {
             return Response.status(Response.Status.OK).build();
         }else{
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @GET
+    @Path("/{id}")
+    public Response findTypeByName(@PathParam("id") int id){
+        PetTypeDTO typeById = animalTypeServices.getTypeById(id);
+        if(typeById==null){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }else{
+            return Response.ok(typeById).status(Response.Status.OK).build();
         }
     }
 }

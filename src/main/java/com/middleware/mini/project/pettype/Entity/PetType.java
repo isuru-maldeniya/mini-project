@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @NamedQuery(name="AnimalType.findByCategoryName",query="SELECT a FROM PetType a WHERE a.categoryName = :categoryName")
-public class PetType extends PanacheEntityBase {
+public class PetType  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
