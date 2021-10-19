@@ -1,6 +1,4 @@
-package com.middleware.mini.project.DTO;
-
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
+package com.middleware.mini.project.pettype.DTO;
 
 public class PetType {
     private int id;

@@ -1,15 +1,12 @@
-package com.middleware.mini.project.Entity;
+package com.middleware.mini.project.pettype.Entity;
 
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@NamedQuery(name="AnimalType.findByCategoryName",query="SELECT a FROM AnimalType a WHERE a.categoryName = :categoryName")
 public class AnimalType extends PanacheEntityBase {
 
     @Id
