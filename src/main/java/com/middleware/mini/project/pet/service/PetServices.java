@@ -89,5 +89,14 @@ public class PetServices {
         return true;
     }
 
+    @Transactional
+    public boolean deleteById(long id){
+        Pet byId = petRepository.findById(id);
+        if(byId==null){
+            return false;
+        }else{
+            return petRepository.deleteById(id);
+        }
+    }
 
 }

@@ -59,5 +59,15 @@ public class PetController {
         }
     }
 
+    @DELETE
+    @Path("/delete/{id}")
+    public Response deleteById(@PathParam("id")long id){
+        if(services.deleteById(id)){
+            return Response.status(Response.Status.OK).build();
+        }else{
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
 
 }
