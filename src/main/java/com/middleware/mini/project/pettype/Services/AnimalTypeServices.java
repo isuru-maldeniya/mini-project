@@ -30,7 +30,7 @@ public class AnimalTypeServices {
         return petTypeRegistry.isPersistent(petType);
     }
 
-    public PetTypeDTO getTypeById(int id){
+    public PetTypeDTO getTypeById(long id){
         PetTypeDTO petTypeDTO=null;
         List<PetTypeDTO> list = petTypeRegistry.list("id", id).stream().map(type -> new PetTypeDTO(
                 type.getId(),
@@ -57,6 +57,29 @@ public class AnimalTypeServices {
         )).collect(Collectors.toList());
     }
 
+
+    @Transactional
+    public boolean update(PetTypeDTO dto, long id){
+        PetType byId=null;
+        byId = petTypeRegistry.findById(id);
+        if(byId==null){
+            return false;
+        }
+
+        if(dto.getClimate()!="" && dto.getClimate()!=null){
+            byId.setClimate(dto.getClimate());
+        }
+        if(dto.getCategoryName()!="" && dto.getCategoryName()!=null){
+            byId.setCategoryName(dto.getCategoryName());
+        }
+        if(dto.getEnvironment()!="" && dto.getEnvironment()!=null){
+            byId.setEnvironment(dto.getEnvironment());
+        }
+        if(dto.getFamily()!="" && dto.getFamily()!=null){
+            byId.setFamily(dto.getFamily());
+        }
+        return true;
+    }
 //    public java.util.List<PetType> search(String name){
 //        return AnimalType.getEntityManager().createNamedQuery("AnimalType.findByCategoryName").setParameter("categoryName",name).getResultList();
 //    }

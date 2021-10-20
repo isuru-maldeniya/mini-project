@@ -1,7 +1,7 @@
 package com.middleware.mini.project.pettype.DTO;
 
 public class PetTypeDTO {
-    private int id;
+    private long id;
     private String categoryName;
     private String family;
     private String environment;
@@ -12,7 +12,7 @@ public class PetTypeDTO {
         this.categoryName = categoryName;
     }
 
-    public PetTypeDTO(int id, String categoryName, String family, String environment, String climate) {
+    public PetTypeDTO(long id, String categoryName, String family, String environment, String climate) {
         this.id = id;
         this.categoryName = categoryName;
         this.family = family;
@@ -23,11 +23,12 @@ public class PetTypeDTO {
     public PetTypeDTO() {
     }
 
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

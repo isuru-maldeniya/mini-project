@@ -11,13 +11,13 @@ public class PetType  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private String categoryName;
     private String family;
     private String environment;
     private String climate;
 
-    public PetType(int id, String categoryName) {
+    public PetType(long id, String categoryName) {
         this.categoryName = categoryName;
 //        this.id=id;
     }
@@ -32,11 +32,11 @@ public class PetType  {
     public PetType() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

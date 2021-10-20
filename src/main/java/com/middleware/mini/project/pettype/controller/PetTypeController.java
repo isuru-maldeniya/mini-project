@@ -25,10 +25,11 @@ public class PetTypeController {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findTypeByName(@PathParam("id") int id){
+    public Response findTypeByName(@PathParam("id") long id){
         PetTypeDTO typeById = animalTypeServices.getTypeById(id);
         if(typeById==null){
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -45,6 +46,18 @@ public class PetTypeController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }else{
             return Response.ok(all).build();
+        }
+    }
+
+    @PUT
+    @Path("/update/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(PetTypeDTO dto, @PathParam("id")long id){
+        if(animalTypeServices.update(dto, id)){
+            return Response.status(Response.Status.OK).build();
+        }else{
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
