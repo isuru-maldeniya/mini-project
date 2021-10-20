@@ -1,16 +1,14 @@
 package com.middleware.mini.project.pettype.Services;
 
-import com.middleware.mini.project.pettype.DTO.PetTypeDTO;
+import com.middleware.mini.project.pettype.dto.PetTypeDTO;
 import com.middleware.mini.project.pettype.Entity.PetType;
 import com.middleware.mini.project.pettype.Entity.PetTypeRegistry;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @ApplicationScoped
 @Transactional

@@ -1,4 +1,4 @@
-package com.middleware.mini.project.pettype.DTO;
+package com.middleware.mini.project.pettype.dto;
 
 public class PetTypeDTO {
     private long id;

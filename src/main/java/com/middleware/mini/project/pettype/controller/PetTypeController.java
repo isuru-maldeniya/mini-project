@@ -1,6 +1,6 @@
 package com.middleware.mini.project.pettype.controller;
 
-import com.middleware.mini.project.pettype.DTO.PetTypeDTO;
+import com.middleware.mini.project.pettype.dto.PetTypeDTO;
 import com.middleware.mini.project.pettype.Services.AnimalTypeServices;
 
 import javax.inject.Inject;
