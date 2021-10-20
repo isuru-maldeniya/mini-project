@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/pet")
 public class PetController {
@@ -37,8 +38,14 @@ public class PetController {
 
     @GET
     @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response giveAllPets(){
-        return null;
+        List<PetDTO> allPets = services.getAllPets();
+        if(allPets.isEmpty()){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }else{
+            return Response.ok(allPets).build();
+        }
     }
 
 

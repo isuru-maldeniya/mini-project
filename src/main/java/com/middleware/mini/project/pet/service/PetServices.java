@@ -9,6 +9,9 @@ import com.middleware.mini.project.pettype.Entity.PetTypeRegistry;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.awt.*;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class PetServices {
@@ -51,6 +54,18 @@ public class PetServices {
             );
         }
         return dto;
+    }
+
+    public java.util.List<PetDTO> getAllPets(){
+        return petRepository.findAll().stream().map(pet -> new PetDTO(
+                pet.getId(),
+                pet.getName(),
+                pet.getColor(),
+                pet.getOwner(),
+                pet.getBirthDate(),
+                pet.isGender(),
+                pet.getType().getId()
+        )).collect(Collectors.toList());
     }
 
 
