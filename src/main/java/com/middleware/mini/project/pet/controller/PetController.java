@@ -108,4 +108,16 @@ public class PetController {
     }
 
 
+    @GET
+    @Path("/common-search")
+    public Response commonSearch(@QueryParam("content") String content){
+        List<PetDTO> allByContent = services.getAllByContent(content);
+        if(allByContent.isEmpty()){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }else{
+            return Response.ok(allByContent).build();
+        }
+    }
+
+
 }

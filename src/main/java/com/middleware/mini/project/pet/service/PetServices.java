@@ -214,4 +214,16 @@ public class PetServices {
                 pet.getType().getId()
         )).collect(Collectors.toList());
     }
+
+    public java.util.List<PetDTO> getAllByContent(String content){
+        return petRepository.list("SELECT m FROM Pet m WHERE m.color LIKE ?1 OR m.name LIKE ?1 OR m.owner LIKE ?1",content+"%").stream().map(pet ->new PetDTO(
+                pet.getId(),
+                pet.getName(),
+                pet.getColor(),
+                pet.getOwner(),
+                pet.getBirthDate(),
+                pet.isGender(),
+                pet.getType().getId()
+        )).collect(Collectors.toList());
+    }
 }
