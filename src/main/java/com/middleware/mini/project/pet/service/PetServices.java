@@ -68,5 +68,26 @@ public class PetServices {
         )).collect(Collectors.toList());
     }
 
+    @Transactional
+    public boolean updatePet(PetDTO dto,long id){
+        Pet byId = petRepository.findById(id);
+        if(byId==null){
+            return false;
+        }
+        if(dto.getName()!=null && dto.getName()!=""){
+            byId.setName(dto.getName());
+        }
+        if(dto.getColor()!=null && dto.getColor()!=""){
+            byId.setColor(dto.getColor());
+        }
+        if(dto.getOwner()!=null && dto.getOwner()!=""){
+            byId.setOwner(dto.getOwner());
+        }
+        if(dto.getBirthDate()!=null){
+            byId.setBirthDate(dto.getBirthDate());
+        }
+        return true;
+    }
+
 
 }

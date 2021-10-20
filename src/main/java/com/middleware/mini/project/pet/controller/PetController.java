@@ -48,5 +48,16 @@ public class PetController {
         }
     }
 
+    @PUT
+    @Path("/update/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updatePet(PetDTO dto, @PathParam("id") long id){
+        if(services.updatePet(dto,id)){
+            return Response.status(Response.Status.OK).build();
+        }else{
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
 
 }
