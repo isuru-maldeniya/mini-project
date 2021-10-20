@@ -80,6 +80,15 @@ public class AnimalTypeServices {
         }
         return true;
     }
+
+    public boolean deleteType(long id){
+        PetType byId = petTypeRegistry.findById(id);
+        if(byId==null){
+            return false;
+        }else{
+            return petTypeRegistry.deleteById(id);
+        }
+    }
 //    public java.util.List<PetType> search(String name){
 //        return AnimalType.getEntityManager().createNamedQuery("AnimalType.findByCategoryName").setParameter("categoryName",name).getResultList();
 //    }
