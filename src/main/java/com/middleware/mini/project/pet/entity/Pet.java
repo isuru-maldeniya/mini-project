@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "pets")
+@NamedQuery(name = "getAllByName",query = "SELECT m FROM Pet m WHERE m.name LIKE ?1")
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

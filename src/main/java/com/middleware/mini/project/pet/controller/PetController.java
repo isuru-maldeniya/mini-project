@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.LinkedList;
 import java.util.List;
 
 @Path("/pet")
@@ -67,6 +68,43 @@ public class PetController {
         }else{
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+    }
+
+    @GET
+    @Path("/filter-search")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response filterSearch(
+            @QueryParam("name") String name,
+            @QueryParam("age") long age,
+            @QueryParam("type") long type
+    ){
+        List<PetDTO> allPets=new LinkedList<>();
+        if(name!=null && age!=0 && type!=0){
+            allPets=services.findAllByNameAndAgeAndType(name,age,type);
+        }else if(name!=null && age!=0){
+            allPets=services.findAllByNameAndAge(name,age);
+        }else if(name!=null && type!=0){
+            allPets=services.findAllByNameAndType(name,type);
+        }else if(age!=0 && type!=0){
+            allPets=services.findAllByAgeAndType(age,type);
+        }else if(name!=null){
+            allPets=services.getSearchByName(name);
+        }else if(age!=0){
+            allPets=services.getAllByAge(age);
+        }else if(type!=0){
+            allPets=services.getAllByType(type);
+        }else{
+            allPets = services.getAllPets();
+
+        }
+
+        if(allPets.isEmpty()){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }else{
+            return Response.ok(allPets).build();
+        }
+
     }
 
 

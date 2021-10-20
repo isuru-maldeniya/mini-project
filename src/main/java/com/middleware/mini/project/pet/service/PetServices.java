@@ -10,6 +10,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
@@ -99,4 +102,116 @@ public class PetServices {
         }
     }
 
+    public java.util.List<PetDTO> getSearchByName(String name){
+        return petRepository.list(
+                "SELECT m FROM Pet m WHERE name like ?1",name+"%").stream().map(pet -> new PetDTO(
+                pet.getId(),
+                pet.getName(),
+                pet.getColor(),
+                pet.getOwner(),
+                pet.getBirthDate(),
+                pet.isGender(),
+                pet.getType().getId()
+        )).collect(Collectors.toList());
+
+    }
+
+    public java.util.List<PetDTO> getAllByAge(long age){
+        return petRepository.list("SELECT m FROM Pet m WHERE YEAR(CURRENT_TIMESTAMP)-YEAR(m.birthDate)=?1",(int)age).stream().map(pet ->new PetDTO(
+                pet.getId(),
+                pet.getName(),
+                pet.getColor(),
+                pet.getOwner(),
+                pet.getBirthDate(),
+                pet.isGender(),
+                pet.getType().getId()
+        )).collect(Collectors.toList());
+    }
+
+    public java.util.List<PetDTO> getAllByType(long type){
+        java.util.List<PetDTO> petDTOS=new LinkedList<>();
+        petRepository.findAll().stream().forEach(pet -> {
+            if(pet.getType().getId()==type){
+                petDTOS.add(
+                        new PetDTO(
+                                pet.getId(),
+                                pet.getName(),
+                                pet.getColor(),
+                                pet.getOwner(),
+                                pet.getBirthDate(),
+                                pet.isGender(),
+                                pet.getType().getId()
+
+                ));
+            }
+        });
+        return petDTOS;
+    }
+
+    public java.util.List<PetDTO> findAllByAgeAndType(long age, long type){
+        java.util.List<PetDTO> petDTOS=new LinkedList<>();
+        petRepository.list("SELECT m FROM Pet m WHERE YEAR(CURRENT_TIMESTAMP)-YEAR(m.birthDate)=?1",(int)age).stream().forEach(pet ->{
+            if(pet.getType().getId()==type){
+                petDTOS.add(
+                        new PetDTO(
+                                pet.getId(),
+                                pet.getName(),
+                                pet.getColor(),
+                                pet.getOwner(),
+                                pet.getBirthDate(),
+                                pet.isGender(),
+                                pet.getType().getId()
+                        )
+            );}
+        });
+        return petDTOS;
+    }
+
+    public java.util.List<PetDTO> findAllByNameAndType(String name, long type){
+        java.util.List<PetDTO> petDTOS=new LinkedList<>();
+        petRepository.list(  "SELECT m FROM Pet m WHERE name like ?1",name+"%").stream().forEach(pet ->{
+            if(pet.getType().getId()==type){
+                petDTOS.add(
+                        new PetDTO(
+                                pet.getId(),
+                                pet.getName(),
+                                pet.getColor(),
+                                pet.getOwner(),
+                                pet.getBirthDate(),
+                                pet.isGender(),
+                                pet.getType().getId()
+                        )
+                );}
+        });
+        return petDTOS;
+    }
+
+    public java.util.List<PetDTO> findAllByNameAndAge(String name, long age){
+            return petRepository.list("SELECT m FROM Pet m WHERE YEAR(CURRENT_TIMESTAMP)-YEAR(m.birthDate)=?1",(int)age).stream().filter(
+                    pet -> pet.getName().contains(name)
+            ).map(pet ->new PetDTO(
+                pet.getId(),
+                pet.getName(),
+                pet.getColor(),
+                pet.getOwner(),
+                pet.getBirthDate(),
+                pet.isGender(),
+                pet.getType().getId()
+        )).collect(Collectors.toList());
+    }
+    public java.util.List<PetDTO> findAllByNameAndAgeAndType(String name, long age, long type){
+        return petRepository.list("SELECT m FROM Pet m WHERE YEAR(CURRENT_TIMESTAMP)-YEAR(m.birthDate)=?1",(int)age).stream().filter(
+                pet -> pet.getName().contains(name)
+        ).filter(
+                pet ->pet.getType().getId()==type
+        ).map(pet ->new PetDTO(
+                pet.getId(),
+                pet.getName(),
+                pet.getColor(),
+                pet.getOwner(),
+                pet.getBirthDate(),
+                pet.isGender(),
+                pet.getType().getId()
+        )).collect(Collectors.toList());
+    }
 }
