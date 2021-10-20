@@ -1,50 +1,31 @@
-package com.middleware.mini.project.pet.entity;
+package com.middleware.mini.project.pet.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.middleware.mini.project.pettype.Entity.PetType;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "pets")
-public class Pet {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class PetDTO {
     private long id;
     private String name;
     private String color;
     private String owner;
     private LocalDate birthDate;
     private boolean gender;
+    private long typeId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
-    @JsonBackReference
-    private PetType type;
-
-    public Pet() {
-    }
-
-    public Pet(String name, String color, String owner, LocalDate birthDate, PetType type, boolean gender) {
+    public PetDTO(long id, String name, String color, String owner, LocalDate birthDate, boolean gender, long typeId) {
+        this.id = id;
         this.name = name;
         this.color = color;
         this.owner = owner;
         this.birthDate = birthDate;
-        this.type = type;
-        this.gender=gender;
+        this.gender = gender;
+        this.typeId = typeId;
+    }
+
+    public PetDTO() {
     }
 
     public long getId() {
         return id;
-    }
-
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
     }
 
     public void setId(long id) {
@@ -83,12 +64,21 @@ public class Pet {
         this.birthDate = birthDate;
     }
 
-    public PetType getType() {
-        return type;
+    public boolean isGender() {
+        return gender;
     }
 
-    public void setType(PetType type) {
-        this.type = type;
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
+
+    public long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(long typeId) {
+        this.typeId = typeId;
+    }
+
 
 }
