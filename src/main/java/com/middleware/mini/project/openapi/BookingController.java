@@ -1,6 +1,7 @@
 package com.middleware.mini.project.openapi;
 
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -36,6 +37,7 @@ public class BookingController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{bookingId}")
+    @Operation(hidden = true)
     public Response getBooking(@PathParam("bookingId") String bookingId) {
         return Response
                 .status(Response.Status.OK)

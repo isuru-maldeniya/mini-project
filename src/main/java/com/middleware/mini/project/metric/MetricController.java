@@ -5,6 +5,7 @@ import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.eclipse.microprofile.metrics.annotation.Metric;
 import org.eclipse.microprofile.metrics.annotation.Timed;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -26,6 +27,7 @@ public class MetricController {
     @Path("timed")
     @Timed(name = "timed-request")
     @GET
+    @Operation(hidden = true)
     public String timedRequest() {
         // Demo, not production style
         int wait = new Random().nextInt(1000);
@@ -42,6 +44,7 @@ public class MetricController {
 
     @Path("increment")
     @GET
+    @Operation(hidden = true)
     public long doIncrement() {
         counter.inc();
         return counter.getCount();
