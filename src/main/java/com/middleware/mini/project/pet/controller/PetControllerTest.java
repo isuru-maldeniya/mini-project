@@ -16,7 +16,7 @@ class PetControllerTest {
 
     private void addType(){
         given().contentType(
-                        MediaType.APPLICATION_JSON).body(
+                    MediaType.APPLICATION_JSON).body(
                         Json.createObjectBuilder().
                                 add("categoryName","Dog").
                                 add("family","Dog").
