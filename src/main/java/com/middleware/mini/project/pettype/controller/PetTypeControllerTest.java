@@ -1,59 +1,137 @@
 package com.middleware.mini.project.pettype.controller;
 
-import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import static io.restassured.RestAssured.given;
-
 import static org.junit.jupiter.api.Assertions.*;
-@QuarkusTest
-@Tag("integration")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
 class PetTypeControllerTest {
 
+//    @Test
+//    @Order(1)
+//    void getAllWhenEmpty() {
+//        given().when().get("data/pet-type/").then().statusCode(400);
+//    }
+
+    private void createType(){
+        given().contentType(
+                        MediaType.APPLICATION_JSON).body(
+                        Json.createObjectBuilder().
+                                add("categoryName","Dog").
+                                add("family","Dog").
+                                add("environment","house-hold").
+                                add("climate","normal").
+                                build().
+                                toString()
+                ).
+                when().
+                post("data/pet-type/add-type");
+    }
+
     @Test
-    @Order(1)
+    @Order(2)
     void addType() {
-        System.out.println("entered");
-        JsonObject jsonObject= Json.createObjectBuilder()
-                .add("categoryName","Dog")
-                .add("family","dog family")
-                .add("environment","any")
-                .add("climate","any")
-                .build();
-        given()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(jsonObject.toString())
-                .when()
-                .post("/data/pet-type/add-type")
-                .then()
-                .statusCode(Response.Status.OK.getStatusCode());
+        given().contentType(
+            MediaType.APPLICATION_JSON).body(
+                Json.createObjectBuilder().
+                    add("categoryName","cat").
+                    add("family","cat").
+                    add("environment","house-hold").
+                    add("climate","normal").
+                    build().
+                    toString()
+        ).
+        when().
+        post("data/pet-type/add-type").
+        then().
+        statusCode(200);
     }
 
-//    id
-//    categoryName
-//    family
-//    environment
-//    climate
+//    private long id;
+//    private String categoryName;
+//    private String family;
+//    private String environment;
+//    private String climate;
 
     @Test
-    void findTypeByName() {
+    @Order(3)
+    void updateTypeByNameSuccess() {
+//        the database can be empty (the pettype id=1 is not existing)
+        createType();
+        given().contentType(MediaType.APPLICATION_JSON).body(
+                Json.createObjectBuilder().
+                        add("categoryName","cat1").
+                        add("environment","house-hold-animal").
+                        build().
+                        toString()
+        ).when().
+            put("data/pet-type/update/1").
+                then().
+                statusCode(200);
     }
 
     @Test
-    void getAll() {
+    @Order(4)
+    void updateTypeByNameWithError() {
+        given().contentType(MediaType.APPLICATION_JSON).body(
+                        Json.createObjectBuilder().
+                                add("categoryName","cat1").
+                                add("environment","house-hold-animal").
+                                build().
+                                toString()
+                ).when().
+                put("data/pet-type/update/4000").
+                then().
+                statusCode(400);
     }
 
     @Test
-    void update() {
+    @Order(5)
+    void getAllSuccess() {
+//        the database can be empty (the pettype id=1 is not existing)
+        createType();
+        given().when().get("data/pet-type/").then().statusCode(200);
+    }
+
+
+    @Test
+    @Order(5)
+    void findById() {
+//        the database can be empty (the pettype id=1 is not existing)
+        createType();
+        given().when().get("data/pet-type/1").then().statusCode(200);
     }
 
     @Test
-    void deleteById() {
+    @Order(6)
+    void deleteByIdSuccess() {
+//        the database can be empty (the pettype id=1 is not existing)
+        createType();
+//        first we are creating one type
+        given().contentType(
+                        MediaType.APPLICATION_JSON).body(
+                        Json.createObjectBuilder().
+                                add("categoryName","Dog").
+                                add("family","Dog").
+                                add("environment","house-hold").
+                                add("climate","normal").
+                                build().
+                                toString()
+                ).
+                when().
+                post("data/pet-type/add-type");
+
+//        now we are deleting the type we previously created
+        given().when().delete("data/pet-type/delete/1").then().statusCode(200);
+    }
+
+    @Test
+    @Order(7)
+    void deleteByIdWithError() {
+        given().when().delete("data/pet-type/delete/5000").then().statusCode(400);
     }
 }
