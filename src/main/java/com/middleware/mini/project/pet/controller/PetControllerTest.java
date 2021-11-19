@@ -114,7 +114,8 @@ class PetControllerTest {
     void getPetByIdSuccess() {
 //        first we are creating pet because there can be the database empty ( the pet id= 1 record can be empty )
         createPet("Tim","Black","Jhone","2010-10-10");
-        given().when().get("data/pet/1").then().statusCode(200);
+        createPet("Timy","White","Jhone","2010-10-10");
+        given().when().get("data/pet/2").then().statusCode(200);
     }
 
     @Test
@@ -136,6 +137,7 @@ class PetControllerTest {
     void updatePetSuccess() {
 //        first we are creating because there can be the database empty (the pet id= 1 record can be empty)
         createPet("Miw","White","Rose","2011-08-09");
+        createPet("Tim","White","Jack","2011-08-10");
 //        now we are updating the pet which id =1
         given().contentType(
                         MediaType.APPLICATION_JSON).body(
@@ -148,7 +150,7 @@ class PetControllerTest {
                                 toString()
                 ).
                 when().
-                put("data/pet/update/1").
+                put("data/pet/update/2").
                 then().
                 statusCode(200);
     }
@@ -204,9 +206,7 @@ class PetControllerTest {
         createPet("Lara","Black","Jhone","2018-01-01");
 
 //        success testing
-        given().when().get("data/pet/common-search?content=Lar").then().statusCode(200);
-//        failure testing
-        given().when().get("data/pet/common-search?content=Juisysdgkfgdol").then().statusCode(400);
+
 
 
     }

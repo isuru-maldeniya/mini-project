@@ -60,7 +60,8 @@ class PetTypeControllerTest {
     @Test
     @Order(3)
     void updateTypeByNameSuccess() {
-//        the database can be empty (the pettype id=1 is not existing)
+//        the database can be empty (the pettype id=2 is not existing)
+        createType();
         createType();
         given().contentType(MediaType.APPLICATION_JSON).body(
                 Json.createObjectBuilder().
@@ -69,7 +70,7 @@ class PetTypeControllerTest {
                         build().
                         toString()
         ).when().
-            put("data/pet-type/update/1").
+            put("data/pet-type/update/2").
                 then().
                 statusCode(200);
     }
@@ -101,9 +102,10 @@ class PetTypeControllerTest {
     @Test
     @Order(5)
     void findById() {
-//        the database can be empty (the pettype id=1 is not existing)
+//        the database can be empty (the pettype id=2 is not existing)
         createType();
-        given().when().get("data/pet-type/1").then().statusCode(200);
+        createType();
+        given().when().get("data/pet-type/2").then().statusCode(200);
     }
 
     @Test
